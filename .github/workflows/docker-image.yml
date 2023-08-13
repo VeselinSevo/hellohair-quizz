@@ -20,7 +20,7 @@ jobs:
       - shell: bash
         run: |
           TOKEN=$(echo ${DOCKER_USERNAME}:${DOCKER_PASSWORD} | base64 -w 0)
-          echo "{ \"auths\": { \"registry.hub.docker.com\": { \"auth\": \"${TOKEN}\" } }  }  }" >> .docker/config.json
+          echo "{ \"auths\": { \"registry.hub.docker.com\": { \"auth\": \"${TOKEN}\" } }  }  }" >> config.json
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
