@@ -8,11 +8,11 @@ on:
 
 env:
   IMAGE_TAG: hellohair-quizz
-  REPOSITORY: codeinsight
+  REPOSITORY: sevosevo/codeinsight
 
 jobs:
 
-  login_creds:
+  docker_login:
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -45,8 +45,8 @@ jobs:
   #       with:
   #         username: ${{ secrets.DOCKER_USERNAME  }}
   #         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-  push:
-    needs: [login_creds]
+  build_and_push:
+    needs: [docker_login]
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v3
@@ -61,7 +61,8 @@ jobs:
       run: |
         DOCKER_AUTH_CONFIG=`cat config.json`
         echo $DOCKER_AUTH_CONFIG > ~/.docker/config.json
-        docker push sevosevo/$REPOSITORY:$IMAGE_TAG
+        docker tag $IMAGE_TAG $REPOSITORY:$IMAGE_TAG
+        docker push $REPOSITORY:$IMAGE_TAG
     # - uses: actions/checkout@v3
     # - name: Push docker image to dockerhub
     #   run: docker push sevosevo/$REPOSITORY:$IMAGE_TAG
