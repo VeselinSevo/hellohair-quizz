@@ -1,0 +1,24 @@
+label {
+    padding: 7px;
+    border: 2px solid transparent;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+label:hover {
+    background-color: #e6e6e6;
+    cursor: pointer;
+}
+
+.label-selected {
+    border: 2px solid black;
+    background-color: transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s;
+    transform: translateY(1px);
+}
+
+img {
+    width: 20%;
+}
+
