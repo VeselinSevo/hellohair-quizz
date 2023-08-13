@@ -44,7 +44,7 @@ jobs:
   #         username: ${{ secrets.DOCKER_USERNAME  }}
   #         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
   push:
-    needs: login
+    needs: loginCreds
     runs-on: ubuntu-latest
     steps: 
     - name: Download dockerhub auth credentials
