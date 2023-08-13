@@ -15,17 +15,11 @@ jobs:
     - name: Build the Docker image
       run: docker build -t "hellohair-quizz" -f ./devops/docker/Dockerfile ./
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: echo "${{ secrets.DOCKER_USERNAME }}"
-
   login:
     runs-on: ubuntu-latest
+    environment: production
     steps:
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME  }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
