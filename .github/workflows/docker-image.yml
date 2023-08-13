@@ -29,6 +29,7 @@ jobs:
           name: config
           path: |
             config.json
+            
 
   # build:
   #   needs: login_creds
