@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  IMAGE_TAG: hellohair-quizz
+  REPOSITORY: codeinsight
+
 jobs:
 
   build:
@@ -13,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build -t "hellohair-quizz" -f ./devops/docker/Dockerfile ./
+      run: docker build -t "$IMAGE_TAG" -f ./devops/docker/Dockerfile ./
 
   login:
     runs-on: ubuntu-latest
@@ -23,4 +27,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME  }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+  push:
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v3
+    - name: Push docker image to dockerhub
+      run: docker push sevosevo/$REPOSITORY:$IMAGE_TAG
 
