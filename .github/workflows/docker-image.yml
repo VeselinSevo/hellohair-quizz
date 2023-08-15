@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_TAG: hellohairquizz
+  IMAGE_TAG: v1
   IMAGE_NAME: hellohairquizz
   SERVICE_NAME: hellohair_quizz
   REPOSITORY: sevosevo/codeinsight
@@ -61,7 +61,7 @@ jobs:
 
       - name: Build/Push docker image to gcloud registry
         run: |
-          gcloud builds submit --tag gcr.io/upbeat-element-396015/testing-repo/hellohair-quizz ./
+          gcloud builds submit --tag gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG ./
 
       # - name: Deploy image
       #   run: |
