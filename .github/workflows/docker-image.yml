@@ -61,7 +61,7 @@ jobs:
 
       - name: Build/Push docker image to gcloud registry
         run: |
-          gcloud builds submit --tag gcr.io/upbeat-element-396015/testing-repo/hellohair-quizz ./devops/docker
+          gcloud builds submit --tag gcr.io/upbeat-element-396015/testing-repo/hellohair-quizz ./
 
       # - name: Deploy image
       #   run: |
