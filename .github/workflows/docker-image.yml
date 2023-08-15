@@ -46,13 +46,12 @@ jobs:
         with:
           credentials_json: '${{ vars.GCLOUD_KEY_FILE_CONTENT }}'
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
+      # - name: 'Set up Cloud SDK'
+      #   uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: Build/Push docker image to gcloud registry
         uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
-          # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
           registry: gcr.io
           project_id: ${{ vars.GCLOUD_PROJECT_ID }}
           image_name: hellohairquizz
