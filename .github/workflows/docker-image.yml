@@ -8,6 +8,7 @@ on:
 
 env:
   IMAGE_TAG: hellohair-quizz
+  IMAGE_NAME: hellohair-quizz
   SERVICE_NAME: hellohair_quizz
   REPOSITORY: sevosevo/codeinsight
 
@@ -49,8 +50,19 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: Build/Push docker image to gcloud registry
-        run: |
-          gcloud builds submit --tag gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/testing-repo/hellohair-quizz ./devops/
+        uses: RafikFarhad/push-to-gcr-github-action@v5-beta
+        with:
+          # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
+          registry: gcr.io
+          project_id: ${{ vars.GCLOUD_PROJECT_ID }}
+          image_name: $IMAGE_NAME
+          image_tag: latest,v1
+          dockerfile: ./devops/Dockerfile
+          context: ./
+
+      # - name: Build/Push docker image to gcloud registry
+      #   run: |
+      #     gcloud builds submit --tag gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/testing-repo/hellohair-quizz ./devops/
 
       - name: Deploy image
         run: |
