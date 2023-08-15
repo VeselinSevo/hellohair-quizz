@@ -55,9 +55,8 @@ jobs:
       
       - name: Configure Google Cloud SDK
         run: |
-          echo "${{ vars.GCLOUD_KEY_FILE_CONTENT}}" > service-account-key.json
-          gcloud config set project ${{ vars.GCLOUD_PROJECT_ID }}
-          gcloud auth activate-service-account --key-file=./service-account-key.json
+          echo ${{ vars.GCLOUD_KEY_FILE_CONTENT}} > service-account-key.json
+          gcloud auth activate-service-account --key-file=service-account-key.json
           
       - name: Build/Push docker image to gcloud registry
         run: |
