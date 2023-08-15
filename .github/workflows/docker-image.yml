@@ -35,7 +35,7 @@ jobs:
     environment: production
     runs-on: ubuntu-latest
     env:
-        IMAGE_URL: europe-west9-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/${{ vars.IMAGE_TAG }}
+        IMAGE_URL: europe-west9-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_TAG
 
     steps:
       - uses: actions/checkout@v3
@@ -50,7 +50,7 @@ jobs:
 
       - name: Build/Push docker image to gcloud registry
         run: |
-          gcloud builds submit --tag "${{ env.IMAGE_URL }}" ./devops/
+          gcloud builds submit --tag ${{ env.IMAGE_URL }} ./devops/
 
       - name: Deploy image
         run: |
