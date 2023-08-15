@@ -38,29 +38,41 @@ jobs:
         IMAGE_URL: europe-west9-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/${{ vars.IMAGE_TAG }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ vars.GCLOUD_KEY_FILE_CONTENT }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
       
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
+      # - name: Install dependencies
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y curl
           
-      - name: Download and Install Google Cloud SDK
-        run: |
-          export CLOUD_SDK_REPO="cloud-sdk-xenial"
-          echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-          sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+      # - name: Download and Install Google Cloud SDK
+      #   run: |
+      #     export CLOUD_SDK_REPO="cloud-sdk-xenial"
+      #     echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+      #     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+      #     sudo apt-get update && sudo apt-get install -y google-cloud-sdk
       
-      - name: Configure Google Cloud SDK
-        run: |
-          echo ${{ vars.GCLOUD_KEY_FILE_CONTENT}} > service-account-key.json
-          gcloud auth activate-service-account --key-file=service-account-key.json
+      # - name: Configure Google Cloud SDK
+      #   run: |
+      #     echo ${{ vars.GCLOUD_KEY_FILE_CONTENT}} > service-account-key.json
+      #     gcloud auth activate-service-account --key-file=service-account-key.json
           
-      - name: Build/Push docker image to gcloud registry
-        run: |
-          gcloud builds submit --tag ${{ env.IMAGE_URL }}
-      - name: Deploy image
-        run: |
-          gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }}
+      # - name: Build/Push docker image to gcloud registry
+      #   run: |
+      #     gcloud builds submit --tag ${{ env.IMAGE_URL }}
+      # - name: Deploy image
+      #   run: |
+      #     gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }}
