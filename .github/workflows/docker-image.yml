@@ -55,7 +55,7 @@ jobs:
           # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
           registry: gcr.io
           project_id: ${{ vars.GCLOUD_PROJECT_ID }}
-          image_name: $IMAGE_NAME
+          image_name: hellohairquizz
           image_tag: latest,v1
           dockerfile: ./devops/Dockerfile
           context: ./
