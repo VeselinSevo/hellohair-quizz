@@ -46,14 +46,13 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
       - name: Build/Push docker image to gcloud registry
         run: |
           gcloud builds submit --tag ${{ env.IMAGE_URL }}
+
       - name: Deploy image
         run: |
-          gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }}
+          gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }} ./devops/
 
       # - name: Checkout code
       #   uses: actions/checkout@v2
