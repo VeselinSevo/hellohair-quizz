@@ -63,7 +63,7 @@ jobs:
         run: |
           gcloud builds submit --tag gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG ./
 
-   -  - name: Deploy image
+      - name: Deploy image
         run: |
           gcloud run deploy $SERVICE_NAME --image gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG
       # gcloud builds submit --tag gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG ./
