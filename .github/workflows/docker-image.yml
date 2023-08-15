@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_TAG: hellohair-quizz
-  IMAGE_NAME: hellohair-quizz
+  IMAGE_TAG: hellohairquizz
+  IMAGE_NAME: hellohairquizz
   SERVICE_NAME: hellohair_quizz
   REPOSITORY: sevosevo/codeinsight
 
