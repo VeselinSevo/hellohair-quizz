@@ -47,12 +47,13 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: Build/Push docker image to gcloud registry
+        uses: actions/checkout@v3
         run: |
-          gcloud builds submit --tag ${{ env.IMAGE_URL }}
+          gcloud builds submit --tag ${{ env.IMAGE_URL }} ./devops/
 
       - name: Deploy image
         run: |
-          gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }} ./devops/
+          gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }}
 
       # - name: Checkout code
       #   uses: actions/checkout@v2
