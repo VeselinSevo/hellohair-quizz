@@ -35,7 +35,7 @@ jobs:
     environment: production
     runs-on: ubuntu-latest
     env:
-        IMAGE_URL: europe-west9-docker.pkg.dev/$GCLOUD_PROJECT_ID/$GCLOUD_REGISTRY_REPOSITORY/$IMAGE_TAG
+        IMAGE_URL: europe-west9-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/${{ vars.IMAGE_TAG }}
 
     steps:
       - name: Checkout code
@@ -55,8 +55,8 @@ jobs:
       
       - name: Configure Google Cloud SDK
         run: |
-          echo ${{ env.GCLOUD_KEY_FILE_CONTENT }} > service-account-key.json
-          gcloud config set project $GCLOUD_PROJECT_ID
+          echo ${{ vars.GCLOUD_KEY_FILE_CONTENT}} > service-account-key.json
+          gcloud config set project ${{ vars.GCLOUD_PROJECT_ID }}
           gcloud auth activate-service-account --key-file=./service-account-key.json
           
       - name: Build/Push docker image to gcloud registry
