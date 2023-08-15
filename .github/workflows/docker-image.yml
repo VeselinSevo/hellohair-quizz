@@ -38,6 +38,8 @@ jobs:
         IMAGE_URL: europe-west9-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/${{ vars.IMAGE_TAG }}
 
     steps:
+      - uses: actions/checkout@v3
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
@@ -45,8 +47,6 @@ jobs:
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
-        
-      - uses: actions/checkout@v3
 
       - name: Build/Push docker image to gcloud registry
         run: |
