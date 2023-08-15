@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_TAG: v1
   IMAGE_NAME: hellohairquizz
-  SERVICE_NAME: hellohair_quizz
+  SERVICE_NAME: hellohairquizz
   REPOSITORY: sevosevo/codeinsight
 
 jobs:
@@ -48,16 +48,6 @@ jobs:
 
       - name: 'Set up Cloud SDK'
         uses: google-github-actions/setup-gcloud@v1.1.1
-
-      # - name: Build/Push docker image to gcloud registry
-      #   uses: RafikFarhad/push-to-gcr-github-action@v5-beta
-      #   with:
-      #     registry: gcr.io
-      #     project_id: ${{ vars.GCLOUD_PROJECT_ID }}
-      #     image_name: hellohairquizz
-      #     image_tag: latest
-      #     dockerfile: ./Dockerfile
-      #     context: ./
 
       - name: Build/Push docker image to gcloud registry
         run: |
