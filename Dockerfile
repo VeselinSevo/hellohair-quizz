@@ -7,7 +7,7 @@ WORKDIR /usr/app
 COPY package*.json /usr/app
 RUN npm i
 WORKDIR /usr/app/client
-COPY package*.json /usr/app/client
+COPY client/package*.json /usr/app/client
 RUN npm i
 RUN npm run build
 
