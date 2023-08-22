@@ -11,6 +11,7 @@ env:
   IMAGE_NAME: hellohairquizz
   SERVICE_NAME: hellohairquizz
   REPOSITORY: sevosevo/codeinsight
+  REGION: europe-west9
 
 jobs:
 
@@ -55,7 +56,7 @@ jobs:
 
       - name: Deploy image
         run: |
-          gcloud run deploy $SERVICE_NAME --image gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG
+          gcloud run deploy $SERVICE_NAME --image gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG --region europe-west9 --file ./devops/docker/Dockerfile
       # gcloud builds submit --tag gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG ./
 
       # - name: Deploy image
