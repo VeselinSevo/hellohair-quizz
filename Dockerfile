@@ -1,4 +1,4 @@
-FROM node:16 as build
+FROM node:16
 LABEL MAINTAINER Veselin Sevo <veselinsevo@gmail.com>
 ARG PORT=8080
 ENV PORT=$PORT
@@ -9,12 +9,10 @@ RUN npm i
 WORKDIR /usr/app/client
 COPY package*.json /usr/app/client
 RUN npm i
+RUN npm run build
 
 WORKDIR /usr/app
 COPY . /usr/app
-
-WORKDIR /usr/app/client
-RUN npm run build
 
 WORKDIR /usr/app
 ENTRYPOINT [ "npm", "run", "start" ]
