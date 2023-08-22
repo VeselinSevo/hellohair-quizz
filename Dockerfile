@@ -8,6 +8,7 @@ COPY package*.json /usr/app
 RUN npm i
 WORKDIR /usr/app/client
 COPY client/package*.json /usr/app/client
+COPY client/public /usr/app/client/public
 RUN npm i
 RUN npm run build
 
