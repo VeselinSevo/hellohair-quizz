@@ -16,16 +16,6 @@ COPY . /usr/app
 WORKDIR /usr/app/client
 RUN npm run build
 
-FROM node:16
 WORKDIR /usr/app
-# @todo: refactor this
-COPY --from=build /usr/app/package.json /usr/app/package.json
-COPY --from=build /usr/app/node_modules /usr/app/node_modules
-# Copy api artifacts
-COPY --from=build /usr/app/api /usr/app/api
-# Copy frontend artifacts
-COPY --from=build /usr/app/client/build /usr/app/client/build
-
 ENTRYPOINT [ "npm", "run", "start" ]
-
 EXPOSE ${PORT}
