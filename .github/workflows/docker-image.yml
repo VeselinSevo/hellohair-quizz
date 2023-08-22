@@ -32,8 +32,8 @@ jobs:
 
       - name: Build/Push docker image to gcloud registry
         run: |
-          gcloud builds submit --tag $GCLOUD_REGISTRY/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG ./
+          gcloud builds submit --tag "$GCLOUD_REGISTRY/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG" ./
 
       - name: Deploy image
         run: |
-          gcloud run deploy $SERVICE_NAME --image $GCLOUD_REGISTRY/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG --region $REGION
+          gcloud run deploy $SERVICE_NAME --image "$GCLOUD_REGISTRY/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG" --region $REGION
