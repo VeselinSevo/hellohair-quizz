@@ -5,10 +5,10 @@ ENV PORT=$PORT
 
 WORKDIR /usr/app
 COPY package*.json /usr/app
-RUN npm i --production=true
+RUN npm i
 WORKDIR /usr/app/client
 COPY package*.json /usr/app/client
-RUN npm i --production=true
+RUN npm i
 
 WORKDIR /usr/app
 COPY . /usr/app
