@@ -7,38 +7,18 @@ on:
     branches: [ "main" ]
 
 env:
+  GCLOUD_REGISTRY: gcr.io
   IMAGE_TAG: v1
   IMAGE_NAME: hellohairquizz
   SERVICE_NAME: hellohairquizz
-  REPOSITORY: sevosevo/codeinsight
   REGION: europe-west9
 
 jobs:
-
-  # build_and_push_to_dockerhub:
-  #   environment: production
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   -
-  #     name: Login to Docker Hub
-  #     uses: docker/login-action@v2
-  #     with:
-  #       username: ${{ secrets.DOCKER_USERNAME }}
-  #       password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-  #   - name: Build the Docker image
-  #     run: |
-  #       docker build -t "$IMAGE_TAG" -f ./devops/docker/Dockerfile ./
-  #       docker tag $IMAGE_TAG $REPOSITORY:$IMAGE_TAG
-  #   - name: Push to Docker hub
-  #     run: |
-  #       docker push $REPOSITORY:$IMAGE_TAG
-  build_push_and_deploy_to_gcloud:
+  Build_Push_And_Deploy_To_GCloud:
     environment: production
     runs-on: ubuntu-latest
-    env:
-        # IMAGE_URL: europe-west9-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/hellohair-quizz
-        IMAGE_URL: gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/hellohair-quizz
+#    env:
+#        IMAGE_URL: gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/hellohair-quizz
     steps:
       - uses: actions/checkout@v3
 
@@ -52,40 +32,8 @@ jobs:
 
       - name: Build/Push docker image to gcloud registry
         run: |
-          gcloud builds submit --tag gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG ./
+          gcloud builds submit --tag $GCLOUD_REGISTRY/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG ./
 
       - name: Deploy image
         run: |
-          gcloud run deploy $SERVICE_NAME --image gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG --region europe-west9
-      # gcloud builds submit --tag gcr.io/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG ./
-
-      # - name: Deploy image
-      #   run: |
-      #     gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }}
-
-      # - name: Checkout code
-      #   uses: actions/checkout@v2
-      
-      # - name: Install dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y curl
-          
-      # - name: Download and Install Google Cloud SDK
-      #   run: |
-      #     export CLOUD_SDK_REPO="cloud-sdk-xenial"
-      #     echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-      #     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-      #     sudo apt-get update && sudo apt-get install -y google-cloud-sdk
-      
-      # - name: Configure Google Cloud SDK
-      #   run: |
-      #     echo ${{ vars.GCLOUD_KEY_FILE_CONTENT}} > service-account-key.json
-      #     gcloud auth activate-service-account --key-file=service-account-key.json
-          
-      # - name: Build/Push docker image to gcloud registry
-      #   run: |
-      #     gcloud builds submit --tag ${{ env.IMAGE_URL }}
-      # - name: Deploy image
-      #   run: |
-      #     gcloud run deploy $SERVICE_NAME --image ${{ env.IMAGE_URL }}
+          gcloud run deploy $SERVICE_NAME --image $GCLOUD_REGISTRY/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REGISTRY_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG --region $REGION
