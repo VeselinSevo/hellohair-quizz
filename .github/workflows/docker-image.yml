@@ -52,7 +52,7 @@ jobs:
 
       - name: Build/Push docker image to gcloud registry
         run: |
-          gcloud builds submit --file ./devops/docker/Dockerfile --tag gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG ./
+          gcloud builds submit --tag gcr.io/upbeat-element-396015/testing-repo/$IMAGE_NAME:$IMAGE_TAG ./
 
       - name: Deploy image
         run: |
